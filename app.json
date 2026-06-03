@@ -16,14 +16,20 @@
       "supportsTablet": true
     },
     "android": {
-    "adaptiveIcon": {
+      "package": "com.unlu.isggmobil",
+"adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-    }
-},
-
+      }
+    },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b7fc06ae-d284-46c7-acca-6a150e0dcd1e"
+      }
+    },
+    "owner": "hamza.unlu"
   }
 }

@@ -4,11 +4,15 @@
 import { API_BASE_URL, DEBUG } from '../config/api';
 import { tokenAl } from './storage';
 
-// ─── ANA İSTEK FONKSİYONU 
+// Mail endpoint'leri uzun sürebilir (SMTP), onlara daha uzun timeout ver
+const MAIL_ROTALARI = ['/api/dokumanlar/mail-gonder', '/api/egitimler'];
+const TIMEOUT_MS = (rota) =>
+    MAIL_ROTALARI.some(r => rota.startsWith(r)) ? 45000 : 15000;
+
+// ─── ANA İSTEK FONKSİYONU
 async function istekGonder(rota, secenekler = {}) {
     const url = `${API_BASE_URL}${rota}`;
 
-   
     const token = await tokenAl();
     const headers = {
         'Content-Type': 'application/json',
@@ -22,8 +26,11 @@ async function istekGonder(rota, secenekler = {}) {
         console.log(`[api] ${secenekler.method || 'GET'} ${url}`);
     }
 
+    const controller = new AbortController();
+    const timeoutId  = setTimeout(() => controller.abort(), TIMEOUT_MS(rota));
+
     try {
-        const yanit = await fetch(url, { ...secenekler, headers });
+        const yanit = await fetch(url, { ...secenekler, headers, signal: controller.signal });
         const veri  = await yanit.json();
 
         if (!yanit.ok) {
@@ -32,8 +39,13 @@ async function istekGonder(rota, secenekler = {}) {
 
         return veri;
     } catch (err) {
+        if (err.name === 'AbortError') {
+            throw new Error('İstek zaman aşımına uğradı, lütfen tekrar deneyin.');
+        }
         if (DEBUG) console.error(`[api] Hata: ${err.message}`);
         throw err;
+    } finally {
+        clearTimeout(timeoutId);
     }
 }
 
