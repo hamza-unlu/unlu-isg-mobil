@@ -35,9 +35,6 @@
         "projectId": "b7fc06ae-d284-46c7-acca-6a150e0dcd1e"
       }
     },
-    "owner": "hamza.unlu",
-    "plugins": [
-      "expo-build-properties"
-    ]
+    "owner": "hamza.unlu"
   }
 }

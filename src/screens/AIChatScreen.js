@@ -181,8 +181,8 @@ export default function AIChatScreen() {
 
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 24}
+                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+                keyboardVerticalOffset={0}
             >
                 {/* Mesaj alanı veya hoşgeldin */}
                 {mesajlar.length === 0 ? (
