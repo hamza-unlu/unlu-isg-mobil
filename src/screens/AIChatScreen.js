@@ -179,12 +179,8 @@ export default function AIChatScreen() {
                 </View>
             </View>
 
-            <KeyboardAvoidingView
-                style={{ flex: 1 }}
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
-            >
-                {/* Mesaj alanı veya hoşgeldin */}
+            {/* Mesaj alanı — flex:1 ile kalan alanı doldurur */}
+            <View style={{ flex: 1 }}>
                 {mesajlar.length === 0 ? (
                     <ScrollView contentContainerStyle={styles.hosgeldinKonteyner}>
                         <HosgeldinKart onOrnekSec={(soru) => gonder(soru)} />
@@ -202,9 +198,13 @@ export default function AIChatScreen() {
                         ListFooterComponent={gonderiliyor ? <YaziyorGosterge /> : null}
                     />
                 )}
+            </View>
 
-                {/* Girdi alanı */}
-                <View style={[styles.girdiAlan, { paddingBottom: insets.bottom + 10 }]}>
+            {/* Girdi alanı — KAV sadece input'u sarar, klavye açılınca yukarı iter */}
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            >
+                <View style={[styles.girdiAlan, { paddingBottom: insets.bottom + 8 }]}>
                     <TextInput
                         style={styles.girdiInput}
                         value={girdi}
