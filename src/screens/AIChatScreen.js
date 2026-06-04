@@ -149,7 +149,7 @@ export default function AIChatScreen() {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
             {/* Üst bar */}
             <View style={styles.ustBar}>
                 <View style={styles.ustBarSol}>
@@ -180,8 +180,8 @@ export default function AIChatScreen() {
 
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
-                behavior="padding"
-                keyboardVerticalOffset={0}
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 24}
             >
                 {/* Mesaj alanı veya hoşgeldin */}
                 {mesajlar.length === 0 ? (
@@ -648,6 +648,7 @@ const styles = StyleSheet.create({
     girdiAlan: {
         flexDirection: 'row',
         padding: 10,
+        paddingBottom: Platform.OS === 'android' ? 16 : 10,
         backgroundColor: '#fff',
         borderTopWidth: 1,
         borderTopColor: '#e2e8f0',
