@@ -150,7 +150,7 @@ export default function AIChatScreen() {
     }
 
     return (
-        <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+        <View style={[styles.container, { paddingTop: insets.top }]}>
             {/* Üst bar */}
             <View style={styles.ustBar}>
                 <View style={styles.ustBarSol}>
@@ -181,8 +181,8 @@ export default function AIChatScreen() {
 
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
-                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-                keyboardVerticalOffset={0}
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
             >
                 {/* Mesaj alanı veya hoşgeldin */}
                 {mesajlar.length === 0 ? (
@@ -204,22 +204,22 @@ export default function AIChatScreen() {
                 )}
 
                 {/* Girdi alanı */}
-                <View style={[styles.girdiAlan, { paddingBottom: Math.max(insets.bottom, 12) }]}>
-                        <TextInput
-                            style={styles.girdiInput}
-                            value={girdi}
-                            onChangeText={setGirdi}
-                            placeholder="Sorunuzu yazın..."
-                            placeholderTextColor="#94a3b8"
-                            multiline
-                            maxLength={1000}
-                            editable={!gonderiliyor}
-                            autoCorrect={false}
-                            autoCapitalize="sentences"
-                            keyboardType="default"
-                            textContentType="none"
-                            spellCheck={false}
-                        />
+                <View style={[styles.girdiAlan, { paddingBottom: insets.bottom + 10 }]}>
+                    <TextInput
+                        style={styles.girdiInput}
+                        value={girdi}
+                        onChangeText={setGirdi}
+                        placeholder="Sorunuzu yazın..."
+                        placeholderTextColor="#94a3b8"
+                        multiline
+                        maxLength={1000}
+                        editable={!gonderiliyor}
+                        autoCorrect={false}
+                        autoCapitalize="sentences"
+                        keyboardType="default"
+                        textContentType="none"
+                        spellCheck={false}
+                    />
                     <TouchableOpacity
                         style={[
                             styles.gonderBtn,
@@ -232,7 +232,7 @@ export default function AIChatScreen() {
                     </TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>
-        </SafeAreaView>
+        </View>
     );
 }
 
