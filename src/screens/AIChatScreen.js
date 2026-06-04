@@ -11,7 +11,6 @@ import {
     Text,
     StyleSheet,
     TouchableOpacity,
-    SafeAreaView,
     FlatList,
     TextInput,
     KeyboardAvoidingView,
@@ -19,6 +18,7 @@ import {
     Alert,
     ScrollView,
 } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
@@ -40,6 +40,7 @@ export default function AIChatScreen() {
     const [girdi, setGirdi]            = useState('');
     const [gonderiliyor, setGonderiliyor] = useState(false);
     const flatListRef = useRef(null);
+    const insets = useSafeAreaInsets();
 
     // ─── GEÇMİŞİ YÜKLE (KVKK: kullanıcı bazlı) ───────────────────────
     useEffect(() => {
@@ -203,7 +204,7 @@ export default function AIChatScreen() {
                 )}
 
                 {/* Girdi alanı */}
-                <View style={styles.girdiAlan}>
+                <View style={[styles.girdiAlan, { paddingBottom: Math.max(insets.bottom, 12) }]}>
                         <TextInput
                             style={styles.girdiInput}
                             value={girdi}
@@ -648,7 +649,6 @@ const styles = StyleSheet.create({
     girdiAlan: {
         flexDirection: 'row',
         padding: 10,
-        paddingBottom: Platform.OS === 'android' ? 16 : 10,
         backgroundColor: '#fff',
         borderTopWidth: 1,
         borderTopColor: '#e2e8f0',
